@@ -491,7 +491,7 @@ exports.run = function (formula, verbose) {
         return asTable(prettyFormula, perElemMass, totalMass);
     };
 
-    return errorMessage;
+    return $tw.utils.htmlEncode(errorMessage);
 };
 
 })();
