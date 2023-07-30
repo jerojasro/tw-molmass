@@ -448,7 +448,16 @@ function asTable(formula, perElemMass, totalMass) {
 exports.run = function (formula, verbose) {
     let parsedFormula, totalMass, perElemMass;
     let errorMessage = "";
+
+    // let's do some minimal preprocessing to the received text: remove any sort of whitespace
+    //
+    // about the regexp: \s is equivalent to
+    // [\f\n\r\t\v\u0020\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]
+    // as per
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Character_classes
+    let whitespaceRegexp = /\s+/g;
     try {
+        formula = formula.replace(whitespaceRegexp, "");
         parsedFormula = parseFormula(formula, []);
         [totalMass, perElemMass] = molecularMass(parsedFormula);
     } catch (error) {
